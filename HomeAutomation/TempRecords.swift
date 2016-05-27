@@ -1,5 +1,5 @@
 //
-//  PiData.swift
+//  TempRecords.swift
 //  HomeAutomation
 //
 //  Created by Nguyen Bui An Trung on 27/5/16.
@@ -8,16 +8,10 @@
 
 import Foundation
 
-class PiData {
-    var temp: Int = 0
-    var timestamp: CLong = 0
+class TempRecords {
+    var list: [PiData]?
     
     init(){
         
-    }
-    
-    init(temp: Int, time: CLong){
-        self.temp = temp
-        self.timestamp = time
     }
 }

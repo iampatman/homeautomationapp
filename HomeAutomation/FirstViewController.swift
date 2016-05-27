@@ -10,20 +10,51 @@ import UIKit
 import Firebase
 
 class FirstViewController: UIViewController {
+    
+    @IBOutlet weak var labelTemp: UILabel!
+    @IBOutlet weak var labelLightStatus: UILabel!
+    @IBOutlet weak var buttonSwitchLed: UIButton!
+    
+    var rootRef: FIRDatabaseReference?
+    var adcRef: FIRDatabaseReference?
+    var ledRef: FIRDatabaseReference?
+    var currentTemp: Int = 0 {
+        didSet {
+            labelTemp.text = String(currentTemp)
+        }
+    }
+
+
+    var ledStatus: Bool = false {
+        didSet {
+            labelLightStatus.text = (ledStatus == true ? "On" : "Off")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         FIRApp.configure()
-        var ref = FIRDatabase.database().reference()
-        print (ref.URL)
-        ref.observeEventType(FIRDataEventType.ChildAdded, withBlock: { (snapshot) in
-            let postDict = snapshot.value as! [String : AnyObject]
-            print("Event")
-            print(postDict)
-            // ...
+        rootRef = FIRDatabase.database().reference()
+        ledRef = rootRef!.child("led")
+        ledRef!.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+            print(snapshot.value!)
+            self.ledStatus = (snapshot.value as! Int) == 1
+            print("Led value: Updated")
+        })
+        
+        adcRef = rootRef?.child("adc")
+        adcRef!.observeEventType(.ChildAdded, withBlock: { (newChildAdded) in
+            print (newChildAdded.value!)
+            let dict = newChildAdded.value as! [String: AnyObject]
+            self.currentTemp = dict["temp"] as! Int
+            print("New child added")
         })
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBAction func switchLEDStatus(sender: AnyObject) {
+        //udpate led status here -> Neel bro
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
