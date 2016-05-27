@@ -13,7 +13,6 @@ class FirstViewController: UIViewController {
     
     @IBOutlet weak var labelTemp: UILabel!
     @IBOutlet weak var labelLightStatus: UILabel!
-    @IBOutlet weak var buttonSwitchLed: UIButton!
     
     var rootRef: FIRDatabaseReference?
     var adcRef: FIRDatabaseReference?
@@ -32,7 +31,6 @@ class FirstViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        FIRApp.configure()
         rootRef = FIRDatabase.database().reference()
         ledRef = rootRef!.child("led")
         ledRef!.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
@@ -49,10 +47,6 @@ class FirstViewController: UIViewController {
             print("New child added")
         })
         // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    @IBAction func switchLEDStatus(sender: AnyObject) {
-        //udpate led status here -> Neel bro
     }
     
     override func didReceiveMemoryWarning() {
