@@ -8,10 +8,14 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
-
+class SecondViewController: UIViewController, LineChartDelegate {
+    
+    var label: UILabel = UILabel()
+    @IBOutlet weak var chartView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        drawChart()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -19,7 +23,47 @@ class SecondViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func drawChart(){
+        var views: [String: AnyObject] = [:]
+        
+        var lineChart: LineChart = LineChart()
+        label.text = "..."
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = NSTextAlignment.Center
+        self.chartView.addSubview(label)
+        views["label"] = label
+        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[label]-|", options: [], metrics: nil, views: views))
+        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[label]", options: [], metrics: nil, views: views))
+        
+        // simple arrays
+        let data: [CGFloat] = [100, 140, 122, 111, 143, 135,300]
+        
+        // simple line with custom x axis labels
+        
+        lineChart = LineChart()
+        lineChart.animation.enabled = true
+        lineChart.area = true
+        lineChart.x.grid.count = 5
+        lineChart.x.labels.visible = false
+        lineChart.y.grid.count = 5
+        lineChart.y.labels.visible = true
+        lineChart.y.axis.inset = 25
+        lineChart.addLine(data)
+        
+        lineChart.translatesAutoresizingMaskIntoConstraints = false
+        lineChart.delegate = self
+        self.chartView.addSubview(lineChart)
+        views["chart"] = lineChart
+        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[chart]-|", options: [], metrics: nil, views: views))
+        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[label]-[chart(==400)]", options: [], metrics: nil, views: views))
 
+    }
+    
+    func didSelectDataPoint(x: CGFloat, yValues: [CGFloat]) {
+        label.text = "Selected value: \(yValues[0])"
+        print("\(x) and \(yValues)")
+    }
 
 }
 

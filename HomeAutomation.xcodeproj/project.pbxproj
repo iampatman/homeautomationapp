@@ -16,6 +16,8 @@
 		2AF5721E1CF852360076747A /* PiData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF5721D1CF852360076747A /* PiData.swift */; };
 		2AF572221CF859930076747A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2AF572211CF859930076747A /* GoogleService-Info.plist */; };
 		2AF572241CF86E4B0076747A /* TempRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF572231CF86E4B0076747A /* TempRecords.swift */; };
+		2AF844F31CFB3E3800368620 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF844F21CFB3E3800368620 /* Utils.swift */; };
+		2AF844F51CFB4F1200368620 /* LineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF844F41CFB4F1200368620 /* LineChart.swift */; };
 		D00F4137B9F63D9535BBE213 /* libPods-HomeAutomation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96382F85BFCCE7A40BAA7ED /* libPods-HomeAutomation.a */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +33,8 @@
 		2AF5721D1CF852360076747A /* PiData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PiData.swift; sourceTree = "<group>"; };
 		2AF572211CF859930076747A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2AF572231CF86E4B0076747A /* TempRecords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempRecords.swift; sourceTree = "<group>"; };
+		2AF844F21CFB3E3800368620 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2AF844F41CFB4F1200368620 /* LineChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChart.swift; sourceTree = "<group>"; };
 		778F0016B7B41E8FCBB97179 /* Pods-HomeAutomation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeAutomation.release.xcconfig"; path = "Pods/Target Support Files/Pods-HomeAutomation/Pods-HomeAutomation.release.xcconfig"; sourceTree = "<group>"; };
 		9D3602437203D297E5B763CD /* Pods-HomeAutomation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HomeAutomation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HomeAutomation/Pods-HomeAutomation.debug.xcconfig"; sourceTree = "<group>"; };
 		A96382F85BFCCE7A40BAA7ED /* libPods-HomeAutomation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HomeAutomation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +83,7 @@
 		2AEAE20E1CF7EDB8001D3D55 /* HomeAutomation */ = {
 			isa = PBXGroup;
 			children = (
+				2AF844F41CFB4F1200368620 /* LineChart.swift */,
 				2AEAE20F1CF7EDB8001D3D55 /* AppDelegate.swift */,
 				2AEAE2111CF7EDB8001D3D55 /* FirstViewController.swift */,
 				2AEAE2131CF7EDB8001D3D55 /* SecondViewController.swift */,
@@ -88,6 +93,7 @@
 				2AEAE21D1CF7EDB8001D3D55 /* Info.plist */,
 				2AF5721D1CF852360076747A /* PiData.swift */,
 				2AF572231CF86E4B0076747A /* TempRecords.swift */,
+				2AF844F21CFB3E3800368620 /* Utils.swift */,
 			);
 			path = HomeAutomation;
 			sourceTree = "<group>";
@@ -228,7 +234,9 @@
 				2AEAE2101CF7EDB8001D3D55 /* AppDelegate.swift in Sources */,
 				2AF5721E1CF852360076747A /* PiData.swift in Sources */,
 				2AF572241CF86E4B0076747A /* TempRecords.swift in Sources */,
+				2AF844F51CFB4F1200368620 /* LineChart.swift in Sources */,
 				2AEAE2121CF7EDB8001D3D55 /* FirstViewController.swift in Sources */,
+				2AF844F31CFB3E3800368620 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

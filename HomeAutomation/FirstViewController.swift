@@ -13,7 +13,9 @@ class FirstViewController: UIViewController {
     
     @IBOutlet weak var labelTemp: UILabel!
     @IBOutlet weak var labelLightStatus: UILabel!
-    
+    let maxTemp = 150
+    let minTemp = 20
+    var allowNotifying: Bool = false
     var rootRef: FIRDatabaseReference?
     var adcRef: FIRDatabaseReference?
     var ledRef: FIRDatabaseReference?
@@ -29,6 +31,13 @@ class FirstViewController: UIViewController {
             labelLightStatus.text = (ledStatus == true ? "On" : "Off")
         }
     }
+    
+    func showMsg(localNotifi: UILocalNotification){
+
+        //Utils.showMessageBox((localNotifi.alertBody)!, viewController: self)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         rootRef = FIRDatabase.database().reference()
@@ -37,6 +46,11 @@ class FirstViewController: UIViewController {
             print(snapshot.value!)
             self.ledStatus = (snapshot.value as! Int) == 1
             print("Led value: Updated")
+            var str = (self.ledStatus == true ? "on" : "off")
+            str = "LED status changed to \(str)"
+            if (self.allowNotifying == true){
+                self.pushLocalNotification(str)
+            }
         })
         
         adcRef = rootRef?.child("adc")
@@ -45,9 +59,30 @@ class FirstViewController: UIViewController {
             let dict = newChildAdded.value as! [String: AnyObject]
             self.currentTemp = dict["temp"] as! Int
             print("New child added")
+            if (self.allowNotifying == true){
+                var strBody = ""
+                if (self.currentTemp > self.maxTemp){
+                    strBody = "Current temp is higher than limit: \(self.currentTemp)"
+                } else if (self.currentTemp < self.minTemp) {
+                    strBody = "Current temp is lower than limit: \(self.currentTemp)"
+                }
+                self.pushLocalNotification(strBody)
+            }
         })
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    func pushLocalNotification(alertBody: String){
+        let localNotification = UILocalNotification()
+        localNotification.alertAction = "Action"
+        localNotification.alertBody = alertBody
+        localNotification.alertTitle = "HomeAutomation Alert"
+        localNotification.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+        localNotification.fireDate = NSDate()
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
