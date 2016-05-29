@@ -16,6 +16,11 @@ class PiData {
         
     }
     
+    init(dict: [String:AnyObject]){
+        temp = dict["temp"] as! Int
+        //timestamp = (dict["timestamp"] as? CLong)!
+    }
+    
     init(temp: Int, time: CLong){
         self.temp = temp
         self.timestamp = time

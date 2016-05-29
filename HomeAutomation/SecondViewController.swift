@@ -12,13 +12,20 @@ class SecondViewController: UIViewController, LineChartDelegate {
     
     var label: UILabel = UILabel()
     @IBOutlet weak var chartView: UIView!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        drawChart()
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    override func viewDidAppear(animated: Bool) {
+        let vc: FirstViewController = ((self.parentViewController as! UITabBarController).viewControllers![0] as? FirstViewController)!
+        if (vc.list.list.count > 7) {
+            drawChart()
+        } else {
+            label.text = "Data is not available now"
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -28,7 +35,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
         var views: [String: AnyObject] = [:]
         
         var lineChart: LineChart = LineChart()
-        label.text = "..."
+        label.text = "Tab on the dot"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = NSTextAlignment.Center
         self.chartView.addSubview(label)
@@ -37,13 +44,19 @@ class SecondViewController: UIViewController, LineChartDelegate {
         self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[label]", options: [], metrics: nil, views: views))
         
         // simple arrays
-        let data: [CGFloat] = [100, 140, 122, 111, 143, 135,300]
+        var data: [CGFloat] = []
+        let vc: FirstViewController = ((self.parentViewController as! UITabBarController).viewControllers![0] as? FirstViewController)!
+        let piDataList = vc.list.last(7)
+        for piData in piDataList {
+            
+            data.append(CGFloat(Float(piData.temp)))
+        }
         
         // simple line with custom x axis labels
         
         lineChart = LineChart()
         lineChart.animation.enabled = true
-        lineChart.area = true
+        lineChart.area = false
         lineChart.x.grid.count = 5
         lineChart.x.labels.visible = false
         lineChart.y.grid.count = 5

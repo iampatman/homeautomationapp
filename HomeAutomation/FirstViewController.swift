@@ -16,6 +16,11 @@ class FirstViewController: UIViewController {
     let maxTemp = 150
     let minTemp = 20
     var allowNotifying: Bool = false
+    
+    var list: TempRecords = TempRecords()
+    
+    @IBOutlet weak var lightSwitch: UISwitch!
+    
     var rootRef: FIRDatabaseReference?
     var adcRef: FIRDatabaseReference?
     var ledRef: FIRDatabaseReference?
@@ -45,6 +50,7 @@ class FirstViewController: UIViewController {
         ledRef!.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
             print(snapshot.value!)
             self.ledStatus = (snapshot.value as! Int) == 1
+            self.lightSwitch.setOn(self.ledStatus, animated: true)
             print("Led value: Updated")
             var str = (self.ledStatus == true ? "on" : "off")
             str = "LED status changed to \(str)"
@@ -59,6 +65,8 @@ class FirstViewController: UIViewController {
             let dict = newChildAdded.value as! [String: AnyObject]
             self.currentTemp = dict["temp"] as! Int
             print("New child added")
+            let data = PiData(dict: dict)
+            self.list.append(data)
             if (self.allowNotifying == true){
                 var strBody = ""
                 if (self.currentTemp > self.maxTemp){
