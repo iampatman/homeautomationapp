@@ -61,6 +61,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2A8E55101CFBDD7E003A4489 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				2AF844F41CFB4F1200368620 /* LineChart.swift */,
+				2AF5721D1CF852360076747A /* PiData.swift */,
+				2AF572231CF86E4B0076747A /* TempRecords.swift */,
+			);
+			name = Entity;
+			sourceTree = "<group>";
+		};
 		2AEAE2031CF7EDB8001D3D55 = {
 			isa = PBXGroup;
 			children = (
@@ -83,16 +93,14 @@
 		2AEAE20E1CF7EDB8001D3D55 /* HomeAutomation */ = {
 			isa = PBXGroup;
 			children = (
-				2AF844F41CFB4F1200368620 /* LineChart.swift */,
 				2AEAE20F1CF7EDB8001D3D55 /* AppDelegate.swift */,
+				2A8E55101CFBDD7E003A4489 /* Entity */,
 				2AEAE2111CF7EDB8001D3D55 /* FirstViewController.swift */,
 				2AEAE2131CF7EDB8001D3D55 /* SecondViewController.swift */,
 				2AEAE2151CF7EDB8001D3D55 /* Main.storyboard */,
 				2AEAE2181CF7EDB8001D3D55 /* Assets.xcassets */,
 				2AEAE21A1CF7EDB8001D3D55 /* LaunchScreen.storyboard */,
 				2AEAE21D1CF7EDB8001D3D55 /* Info.plist */,
-				2AF5721D1CF852360076747A /* PiData.swift */,
-				2AF572231CF86E4B0076747A /* TempRecords.swift */,
 				2AF844F21CFB3E3800368620 /* Utils.swift */,
 			);
 			path = HomeAutomation;

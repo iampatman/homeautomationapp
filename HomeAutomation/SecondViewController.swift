@@ -11,6 +11,8 @@ import UIKit
 class SecondViewController: UIViewController, LineChartDelegate {
     
     var label: UILabel = UILabel()
+    var lineChart = LineChart()
+
     @IBOutlet weak var chartView: UIView!
         
     override func viewDidLoad() {
@@ -21,6 +23,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
     override func viewDidAppear(animated: Bool) {
         let vc: FirstViewController = ((self.parentViewController as! UITabBarController).viewControllers![0] as? FirstViewController)!
         if (vc.list.list.count > 7) {
+            lineChart.clear()
             drawChart()
         } else {
             label.text = "Data is not available now"
@@ -34,7 +37,6 @@ class SecondViewController: UIViewController, LineChartDelegate {
     func drawChart(){
         var views: [String: AnyObject] = [:]
         
-        var lineChart: LineChart = LineChart()
         label.text = "Tab on the dot"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = NSTextAlignment.Center
@@ -52,9 +54,10 @@ class SecondViewController: UIViewController, LineChartDelegate {
             data.append(CGFloat(Float(piData.temp)))
         }
         
+        let data1: [CGFloat] = [255]
+        
         // simple line with custom x axis labels
         
-        lineChart = LineChart()
         lineChart.animation.enabled = true
         lineChart.area = false
         lineChart.x.grid.count = 5
@@ -63,7 +66,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
         lineChart.y.labels.visible = true
         lineChart.y.axis.inset = 25
         lineChart.addLine(data)
-        
+        lineChart.addLine(data1)
         lineChart.translatesAutoresizingMaskIntoConstraints = false
         lineChart.delegate = self
         self.chartView.addSubview(lineChart)
