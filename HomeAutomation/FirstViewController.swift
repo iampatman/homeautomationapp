@@ -16,7 +16,8 @@ class FirstViewController: UIViewController {
     let maxTemp = 150
     let minTemp = 20
     var allowNotifying: Bool = false
-    
+    var lastTimestamp: Double = 0
+    var allowDisplaying: Bool = false
     var list: TempRecords = TempRecords()
     
     @IBOutlet weak var lightSwitch: UISwitch!
@@ -60,24 +61,44 @@ class FirstViewController: UIViewController {
         })
         
         adcRef = rootRef?.child("adc")
-        adcRef!.observeEventType(.ChildAdded, withBlock: { (newChildAdded) in
-            print (newChildAdded.value!)
-            let dict = newChildAdded.value as! [String: AnyObject]
+        
+        let query = adcRef?.queryLimitedToLast(1)
+        query?.observeSingleEventOfType(.ChildAdded, withBlock: { (lastValue) in
+            print (lastValue.value!)
+            let dict = lastValue.value as! [String: AnyObject]
             self.currentTemp = dict["temp"] as! Int
-            print("New child added")
-            let data = PiData(dict: dict)
-            self.list.append(data)
-            if (self.allowNotifying == true){
-                var strBody = ""
-                if (self.currentTemp > self.maxTemp){
-                    strBody = "Current temp is higher than limit: \(self.currentTemp)"
-                } else if (self.currentTemp < self.minTemp) {
-                    strBody = "Current temp is lower than limit: \(self.currentTemp)"
+            self.lastTimestamp = dict["timestamp"] as! Double
+            print("last value")
+            self.adcRef!.observeEventType(.ChildAdded, withBlock: { (newChildAdded) in
+                print (newChildAdded.value!)
+                let dict = newChildAdded.value as! [String: AnyObject]
+                
+                print("New child added")
+                let data = PiData(dict: dict)
+                self.list.append(data)
+                
+                let timestamp = dict["timestamp"] as! Double
+                if (self.allowDisplaying){
+                    self.currentTemp = dict["temp"] as! Int
                 }
-                self.pushLocalNotification(strBody)
-            }
+                if (!self.allowDisplaying && self.lastTimestamp == timestamp){
+                    self.allowDisplaying = true
+                }
+
+                if (self.allowNotifying == true){
+                    var strBody = ""
+                    if (self.currentTemp > self.maxTemp){
+                        strBody = "Current temp is higher than limit: \(self.currentTemp)"
+                    } else if (self.currentTemp < self.minTemp) {
+                        strBody = "Current temp is lower than limit: \(self.currentTemp)"
+                    }
+                    self.pushLocalNotification(strBody)
+                }
+            })
+
         })
-        // Do any additional setup after loading the view, typically from a nib.
+        
+                // Do any additional setup after loading the view, typically from a nib.
     }
     
     func pushLocalNotification(alertBody: String){
@@ -91,6 +112,9 @@ class FirstViewController: UIViewController {
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     }
     
+    @IBAction func switchChange(sender: AnyObject) {
+        ledRef?.setValue(self.lightSwitch.on)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
