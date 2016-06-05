@@ -8,9 +8,9 @@
 
 import UIKit
 import Firebase
-
+import GoogleSignIn
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
 
     var window: UIWindow?
     var localNotification: UILocalNotification?
@@ -18,9 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         FIRApp.configure()
+        //Configure Google Sign in
+        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()!.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
+        
         let types: UIUserNotificationType = UIUserNotificationType([.Alert, .Badge, .Sound])
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: types, categories: nil))
         return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, options: [String: AnyObject]) -> Bool
+    {
+        return GIDSignIn.sharedInstance().handleURL(url,
+                                                    sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as? String,
+                                                    annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -33,13 +44,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print("applicationDidEnterBackground")
-        let vc: FirstViewController = ((window?.rootViewController as! UITabBarController).viewControllers![0] as? FirstViewController)!
-        vc.allowNotifying = true
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("before Email: " + user.profile.email)
+            
+        }
+        //GIDSignIn.sharedInstance().disconnect()
+        GIDSignIn.sharedInstance().signOut()
+        if let user = FIRAuth.auth()?.currentUser {
+            print("before user id: \(user.uid)")
+        }
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("after Email: " + user.profile.email)
+        }
+        //try! FIRAuth.auth()!.signOut()
+        if let user = FIRAuth.auth()?.currentUser {
+            print("after user id: \(user.uid)")
+        }
+        if let uitabbarvc = window?.rootViewController as? UITabBarController {
+            let vc: FirstViewController = (uitabbarvc.viewControllers![0] as? FirstViewController)!
+            vc.allowNotifying = true
+        }
+        
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         print("applicationWillEnterForeground")
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("Email: " + user.profile.email)
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -56,13 +89,88 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        print ("applicationWillTerminate")
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("before Email: " + user.profile.email)
+            
+        }
+        
+        GIDSignIn.sharedInstance().disconnect()
+        if let user = FIRAuth.auth()?.currentUser {
+            print("before user id: \(user.uid)")
+        }
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("after Email: " + user.profile.email)
+        }
+       //try! FIRAuth.auth()!.signOut()
+        if let user = FIRAuth.auth()?.currentUser {
+            print("after user id: \(user.uid)")
+        }
+
     }
     
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         self.localNotification = notification
     }
 
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
+        if let user = GIDSignIn.sharedInstance().currentUser {
+            print ("Email: " + user.profile.email)
+        }
+        if let user = FIRAuth.auth()?.currentUser {
+            print("user id: \(user.uid)")
+        }
+        if let error = error {
+            print (error.localizedDescription)
+            return
+        } /* else {
+            let userId = user.userID                  // For client-side use only!
+            let idToken = user.authentication.idToken // Safe to send to the server
+            let fullName = user.profile.name
+            let givenName = user.profile.givenName
+            let familyName = user.profile.familyName
+            let email = user.profile.email
+        }
+        */
+        var authentication = user.authentication
+        var credential = FIRGoogleAuthProvider.credentialWithIDToken(authentication.idToken,
+                                                                     accessToken: authentication.accessToken)
+
+        FIRAuth.auth()?.signInWithCredential(credential) { (user, error) in
+            if let error = error {
+                print (error.localizedDescription)
+                return
+            }
+            if let user = FIRAuth.auth()?.currentUser {
+                print("user id: \(user.uid)")
+            }
+
+            let storyBoard: UIStoryboard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
+            let tabBarController: UITabBarController = storyBoard.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController = tabBarController
+        }
+
+    }
     
+
+    
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+                withError error: NSError!) {
+        if let error = error {
+            print (error.localizedDescription)
+            return
+        }
+        print ("didDisconnectWithUser")
+        let storyBoard: UIStoryboard = UIStoryboard(name:"Main", bundle: NSBundle.mainBundle())
+        let vc: LoginViewController = storyBoard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = vc
+        try! FIRAuth.auth()!.signOut()
+
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
 
 }
 

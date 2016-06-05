@@ -12,7 +12,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
     
     var label: UILabel = UILabel()
     var lineChart = LineChart()
-
+    var orientationLanscape = false
     @IBOutlet weak var chartView: UIView!
         
     override func viewDidLoad() {
@@ -28,6 +28,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
         } else {
             label.text = "Data is not available now"
         }
+        self.orientationLanscape = UIDevice.currentDevice().orientation.isLandscape
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -71,8 +72,13 @@ class SecondViewController: UIViewController, LineChartDelegate {
         lineChart.delegate = self
         self.chartView.addSubview(lineChart)
         views["chart"] = lineChart
-        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[chart]-|", options: [], metrics: nil, views: views))
-        self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[label]-[chart(==400)]", options: [], metrics: nil, views: views))
+
+        if (!self.orientationLanscape){
+            self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[chart]-|", options: [], metrics: nil, views: views))
+            self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[label]-[chart(==400)]", options: [], metrics: nil, views: views))
+        } else {
+            self.chartView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[label]-[chart(==150)]", options: [], metrics: nil, views: views))
+        }
 
     }
     

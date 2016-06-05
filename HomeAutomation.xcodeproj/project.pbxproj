@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A0E380C1D016EEA00A84BB7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0E380B1D016EEA00A84BB7 /* LoginViewController.swift */; };
 		2AEAE2101CF7EDB8001D3D55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEAE20F1CF7EDB8001D3D55 /* AppDelegate.swift */; };
 		2AEAE2121CF7EDB8001D3D55 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEAE2111CF7EDB8001D3D55 /* FirstViewController.swift */; };
 		2AEAE2141CF7EDB8001D3D55 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AEAE2131CF7EDB8001D3D55 /* SecondViewController.swift */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A0E38081D016A3900A84BB7 /* HomeAutomation-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HomeAutomation-Bridging-Header.h"; sourceTree = "<group>"; };
+		2A0E380B1D016EEA00A84BB7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2AEAE20C1CF7EDB8001D3D55 /* HomeAutomation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomeAutomation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AEAE20F1CF7EDB8001D3D55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AEAE2111CF7EDB8001D3D55 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +77,7 @@
 		2AEAE2031CF7EDB8001D3D55 = {
 			isa = PBXGroup;
 			children = (
+				2A0E38081D016A3900A84BB7 /* HomeAutomation-Bridging-Header.h */,
 				2AF572211CF859930076747A /* GoogleService-Info.plist */,
 				2AEAE20E1CF7EDB8001D3D55 /* HomeAutomation */,
 				2AEAE20D1CF7EDB8001D3D55 /* Products */,
@@ -97,6 +101,7 @@
 				2A8E55101CFBDD7E003A4489 /* Entity */,
 				2AEAE2111CF7EDB8001D3D55 /* FirstViewController.swift */,
 				2AEAE2131CF7EDB8001D3D55 /* SecondViewController.swift */,
+				2A0E380B1D016EEA00A84BB7 /* LoginViewController.swift */,
 				2AEAE2151CF7EDB8001D3D55 /* Main.storyboard */,
 				2AEAE2181CF7EDB8001D3D55 /* Assets.xcassets */,
 				2AEAE21A1CF7EDB8001D3D55 /* LaunchScreen.storyboard */,
@@ -242,6 +247,7 @@
 				2AEAE2101CF7EDB8001D3D55 /* AppDelegate.swift in Sources */,
 				2AF5721E1CF852360076747A /* PiData.swift in Sources */,
 				2AF572241CF86E4B0076747A /* TempRecords.swift in Sources */,
+				2A0E380C1D016EEA00A84BB7 /* LoginViewController.swift in Sources */,
 				2AF844F51CFB4F1200368620 /* LineChart.swift in Sources */,
 				2AEAE2121CF7EDB8001D3D55 /* FirstViewController.swift in Sources */,
 				2AF844F31CFB3E3800368620 /* Utils.swift in Sources */,
@@ -365,6 +371,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = sg.edu.nus.iss.trung.HomeAutomation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "HomeAutomation-Bridging-Header.h";
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "";
 			};
 			name = Debug;
 		};
@@ -380,6 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = sg.edu.nus.iss.trung.HomeAutomation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "HomeAutomation-Bridging-Header.h";
 			};
 			name = Release;
 		};

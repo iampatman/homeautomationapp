@@ -9,5 +9,6 @@
 #ifndef HomeAutomation_Bridging_Header_h
 #define HomeAutomation_Bridging_Header_h
 
+#import <GoogleSignIn/GoogleSignIn.h>
 
 #endif /* HomeAutomation_Bridging_Header_h */

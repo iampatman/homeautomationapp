@@ -6,8 +6,17 @@
 //  Copyright © 2016 Nguyen Bui An Trung. All rights reserved.
 //
 
-import Cocoa
+import UIKit
+import GoogleSignIn
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
+    @IBOutlet weak var loginuiview: UIView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().signInSilently()
+        let gsb = GIDSignInButton()
+        self.loginuiview.addSubview(gsb)
+    }
 }
