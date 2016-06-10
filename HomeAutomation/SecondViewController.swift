@@ -49,7 +49,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
         // simple arrays
         var data: [CGFloat] = []
         let vc: FirstViewController = ((self.parentViewController as! UITabBarController).viewControllers![0] as? FirstViewController)!
-        let piDataList = vc.list.last(7)
+        let piDataList = vc.list.last(10)
         for piData in piDataList {
             
             data.append(CGFloat(Float(piData.temp)))

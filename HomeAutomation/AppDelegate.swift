@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
         //Configure Google Sign in
         GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()!.options.clientID
         GIDSignIn.sharedInstance().delegate = self
-        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         let types: UIUserNotificationType = UIUserNotificationType([.Alert, .Badge, .Sound])
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: types, categories: nil))
         return true
@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         print("applicationDidEnterBackground")
+        /*
         if let user = GIDSignIn.sharedInstance().currentUser {
             print ("before Email: " + user.profile.email)
             
@@ -60,10 +61,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
         if let user = FIRAuth.auth()?.currentUser {
             print("after user id: \(user.uid)")
         }
+        */
         if let uitabbarvc = window?.rootViewController as? UITabBarController {
             let vc: FirstViewController = (uitabbarvc.viewControllers![0] as? FirstViewController)!
             vc.allowNotifying = true
-        }
+         }
+
         
     }
 

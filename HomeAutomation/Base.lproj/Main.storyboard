@@ -109,13 +109,13 @@
                                 <exclude reference="cfD-UZ-MAg"/>
                                 <exclude reference="pr5-fz-Kuf"/>
                                 <exclude reference="r2Z-k6-dN7"/>
-                                <exclude reference="tvF-ao-tIC"/>
                                 <exclude reference="IgG-pe-3Ut"/>
                                 <exclude reference="QdR-cT-uge"/>
                                 <exclude reference="WDH-5K-1Gv"/>
                                 <exclude reference="su9-KI-68D"/>
                                 <exclude reference="u9g-HT-bJn"/>
                                 <exclude reference="Wfa-Ry-Ds6"/>
+                                <exclude reference="tvF-ao-tIC"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -134,7 +134,6 @@
                                 <exclude reference="fJi-Aa-WTj"/>
                                 <include reference="pr5-fz-Kuf"/>
                                 <exclude reference="r2Z-k6-dN7"/>
-                                <exclude reference="tvF-ao-tIC"/>
                                 <exclude reference="6ME-z2-Tsj"/>
                                 <exclude reference="IgG-pe-3Ut"/>
                                 <exclude reference="KkN-65-w64"/>
@@ -144,6 +143,7 @@
                                 <exclude reference="u9g-HT-bJn"/>
                                 <include reference="Wfa-Ry-Ds6"/>
                                 <exclude reference="nqb-1n-Bvr"/>
+                                <exclude reference="tvF-ao-tIC"/>
                             </mask>
                         </variation>
                     </view>
