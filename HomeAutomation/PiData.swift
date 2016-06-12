@@ -9,7 +9,7 @@
 import Foundation
 
 class PiData {
-    var temp: Int = 0
+    var temp: Double = 0
     var timestamp: CLong = 0
     
     init(){
@@ -17,11 +17,11 @@ class PiData {
     }
     
     init(dict: [String:AnyObject]){
-        temp = dict["temp"] as! Int
+        temp = dict["temp"] as! Double
         //timestamp = (dict["timestamp"] as? CLong)!
     }
     
-    init(temp: Int, time: CLong){
+    init(temp: Double, time: CLong){
         self.temp = temp
         self.timestamp = time
     }

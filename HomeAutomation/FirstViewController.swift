@@ -13,8 +13,8 @@ class FirstViewController: UIViewController {
     
     @IBOutlet weak var labelTemp: UILabel!
     @IBOutlet weak var labelLightStatus: UILabel!
-    let maxTemp = 150
-    let minTemp = 20
+    let maxTemp = 150.0
+    let minTemp = 20.0
     var allowNotifying: Bool = false
     var lastTimestamp: Double = 0
     var allowDisplaying: Bool = false
@@ -25,12 +25,11 @@ class FirstViewController: UIViewController {
     var rootRef: FIRDatabaseReference?
     var adcRef: FIRDatabaseReference?
     var ledRef: FIRDatabaseReference?
-    var currentTemp: Int = 0 {
+    var currentTemp: Double = 0 {
         didSet {
-            labelTemp.text = String(currentTemp)
+            labelTemp.text = NSString(format: "%.2f °C", currentTemp) as String
         }
     }
-
 
     var ledStatus: Bool = false {
         didSet {
@@ -66,7 +65,7 @@ class FirstViewController: UIViewController {
         query?.observeSingleEventOfType(.ChildAdded, withBlock: { (lastValue) in
             print (lastValue.value!)
             let dict = lastValue.value as! [String: AnyObject]
-            self.currentTemp = dict["temp"] as! Int
+            self.currentTemp = dict["temp"] as! Double
             self.lastTimestamp = dict["timestamp"] as! Double
             print("last value")
             self.adcRef!.observeEventType(.ChildAdded, withBlock: { (newChildAdded) in
@@ -79,7 +78,7 @@ class FirstViewController: UIViewController {
                 
                 let timestamp = dict["timestamp"] as! Double
                 if (self.allowDisplaying){
-                    self.currentTemp = dict["temp"] as! Int
+                    self.currentTemp = dict["temp"] as! Double
                 }
                 if (!self.allowDisplaying && self.lastTimestamp == timestamp){
                     self.allowDisplaying = true

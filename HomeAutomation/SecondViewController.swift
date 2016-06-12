@@ -83,7 +83,7 @@ class SecondViewController: UIViewController, LineChartDelegate {
     }
     
     func didSelectDataPoint(x: CGFloat, yValues: [CGFloat]) {
-        label.text = "Selected value: \(yValues[0])"
+        label.text = NSString(format: "Selected value: %.2f °C",yValues[0]) as String
         print("\(x) and \(yValues)")
     }
 
